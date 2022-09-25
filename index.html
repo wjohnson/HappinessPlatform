@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Happiness Platform</title>
+        <link rel="stylesheet" href="main.css">
+        <script src="./fetch.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+        <div>
+            <header>
+                <h1>😁Happiness Platform</h1>
+            </header>
+            <aside>
+                <h3>Admin Panel</h3>
+                <form>
+                    <p>
+                        <label for="task1endpoint">Task 1 Endpoint</label>
+                        <input id="task1endpoint"></input>
+                        <label for="task1key">Task 1 Key</label>
+                        <input id="task1key" type="password"></input>
+                    </p>
+                    <p>
+                        <label for="task2endpoint">Task 2 Endpoint</label>
+                        <input id="task2endpoint"></input>
+                        <label for="task2key">Task 2 Key</label>
+                        <input id="task2key" type="password"></input>
+                    </p>
+                    <p>
+                        <label for="task3endpoint">Task 3 Endpoint</label>
+                        <input id="task3endpoint"></input>
+                        <label for="task3key">Task 3 Key</label>
+                        <input id="task3key" type="password"></input>
+                    </p>
+                </form>
+                <form>
+                    <p>
+                        <label for="startfrom">Starting Id</label>
+                        <input id="startfrom"></input>
+                    </p>
+                    <p>
+                        <button onclick="getMessage()" type="button">Retrieve Message</button>
+                    </p>
+                    <p>
+                        <button onclick="clearChat()" type="button">Clear Chat</button>
+                    </p>
+                </form>
+            </aside>
+            <main id="chat">
+                <section class="message-pair">
+                    <p class="bot">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
+                    <p class="user">#1 Feugiat sed lectus vestibulum mattis.</p>
+                </section>
+                <section class="message-pair">
+                    <p class="bot">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
+                    <p class="user">#2 Feugiat sed lectus vestibulum mattis.</p>
+                </section>
+                <section class="message-pair">
+                    <p class="bot">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
+                    <p class="user">#3 Feugiat sed lectus vestibulum mattis.</p>
+                </section>
+            </main>
+            <section class="block" id="console">
+                <p id="respone05">
+                    &nbsp;
+                </p>
+                <p id="respone04">
+                    &nbsp;
+                </p>
+                <p id="respone03">
+                    &nbsp;
+                </p>
+                <p id="respone02">
+                    &nbsp;
+                </p>
+                <p id="respone01">
+                    &nbsp;
+                </p>
+            </section>
+    </body>
+</html>
