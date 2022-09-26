@@ -34,6 +34,25 @@
                         <label for="task3key">Task 3 Key</label>
                         <input id="task3key" type="password"></input>
                     </p>
+                    <details>
+                        <summary>Additional Tasks</summary>
+                        <h3>Mystery #1</h3>
+                        <p>
+                            <label for="myster01endpoint">Endpoint</label>
+                            <input id="myster01endpoint"></input>
+                            <br/>
+                            <label for="mystery01key">Key</label>
+                            <input id="mystery01key" type="password"></input>
+                        </p>
+                        <h3>Mystery #2</h3>
+                        <p>
+                            <label for="myster02endpoint">Endpoint</label>
+                            <input id="myster02endpoint"></input>
+                            <br/>
+                            <label for="mystery02key">Key</label>
+                            <input id="mystery02key" type="password"></input>
+                        </p>
+                    </details>
                 </form>
                 <form>
                     <p>
@@ -46,37 +65,24 @@
                     <p>
                         <button onclick="clearChat()" type="button">Clear Chat</button>
                     </p>
+                    <p>
+                        <button onclick="callCogSvc()" type="button">Call Cog Service</button>
+                    </p>
                 </form>
             </aside>
             <main id="chat">
                 <section class="message-pair">
-                    <p class="bot">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-                    <p class="user">#1 Feugiat sed lectus vestibulum mattis.</p>
+                    <p class="bot">Welcome to the Happiness Platform! How are you feeling today?</p>
+                    <p class="user">Feeling good now that I'm chatting with you 😁</p>
                 </section>
                 <section class="message-pair">
-                    <p class="bot">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-                    <p class="user">#2 Feugiat sed lectus vestibulum mattis.</p>
-                </section>
-                <section class="message-pair">
-                    <p class="bot">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-                    <p class="user">#3 Feugiat sed lectus vestibulum mattis.</p>
+                    <p class="bot">Click on "Retrieve Message" to get started</p>
                 </section>
             </main>
+            
             <section class="block" id="console">
-                <p id="respone05">
-                    &nbsp;
-                </p>
-                <p id="respone04">
-                    &nbsp;
-                </p>
-                <p id="respone03">
-                    &nbsp;
-                </p>
-                <p id="respone02">
-                    &nbsp;
-                </p>
-                <p id="respone01">
-                    &nbsp;
+                <p>
+                    &rightarrow;
                 </p>
             </section>
     </body>
