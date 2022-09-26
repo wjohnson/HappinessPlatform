@@ -184,3 +184,7 @@ p.user {
     border-radius: 25px;
     text-align:right;
 }
+
+.console-error{
+    color: red;
+}

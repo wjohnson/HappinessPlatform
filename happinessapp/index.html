@@ -23,16 +23,25 @@
                         <input id="task1key" type="password"></input>
                     </p>
                     <p>
+                        <button onclick="task1ApiCall()" type="button">Call Task 1 API</button>
+                    </p>
+                    <p>
                         <label for="task2endpoint">Task 2 Endpoint</label>
                         <input id="task2endpoint"></input>
                         <label for="task2key">Task 2 Key</label>
                         <input id="task2key" type="password"></input>
                     </p>
                     <p>
+                        <button onclick="task2ApiCall()" type="button">Call Task 2 API</button>
+                    </p>
+                    <p>
                         <label for="task3endpoint">Task 3 Endpoint</label>
                         <input id="task3endpoint"></input>
                         <label for="task3key">Task 3 Key</label>
                         <input id="task3key" type="password"></input>
+                    </p>
+                    <p>
+                        <button onclick="task3ApiCall()" type="button">Call Task 3 API</button>
                     </p>
                     <details>
                         <summary>Additional Tasks</summary>
@@ -44,6 +53,9 @@
                             <label for="mystery01key">Key</label>
                             <input id="mystery01key" type="password"></input>
                         </p>
+                        <p>
+                            <button onclick="mystery1ApiCall()" type="button">Call Mystery 1 API</button>
+                        </p>
                         <h3>Mystery #2</h3>
                         <p>
                             <label for="myster02endpoint">Endpoint</label>
@@ -51,6 +63,9 @@
                             <br/>
                             <label for="mystery02key">Key</label>
                             <input id="mystery02key" type="password"></input>
+                        </p>
+                        <p>
+                            <button onclick="mystery2ApiCall()" type="button">Call Mystery 2 API</button>
                         </p>
                     </details>
                 </form>
@@ -65,9 +80,7 @@
                     <p>
                         <button onclick="clearChat()" type="button">Clear Chat</button>
                     </p>
-                    <p>
-                        <button onclick="callCogSvc()" type="button">Call Cog Service</button>
-                    </p>
+                    
                 </form>
             </aside>
             <main id="chat">

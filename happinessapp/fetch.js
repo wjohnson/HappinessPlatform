@@ -11,11 +11,14 @@ function clearChat(){
     }
 }
 
-function makeConsoleElement(consoleMessage){
+function makeConsoleElement(consoleMessage, isError=false){
    var ranAt = Date(Date.now())
    var consoleParagraph = document.createElement('p');
       consoleParagraph.className = 'console-message';
       consoleParagraph.innerHTML = ranAt.toString() + ": " + consoleMessage;
+   if (isError){
+      consoleParagraph.classList.add('console-error');
+   }
    return consoleParagraph;
 }
 
@@ -113,6 +116,7 @@ function callAzureML(endpoint, key){
 
 async function callAzureCogSvc(endpoint, key, message){
    let cogSvcsResponse = {};
+   let rawResponse = null;
    await fetch(endpoint,
       {
          method: 'POST',
@@ -125,9 +129,14 @@ async function callAzureCogSvc(endpoint, key, message){
       },
    )
       .then((response) => response.json())
-      .then((data) => {
-         console.log(data);
-         cogSvcsResponse = data;
+      .then((cogSvcResponse) => {
+         var consoleBody = document.getElementById("console");
+         let isCogSvcsError = false;
+         if ("error" in cogSvcResponse){
+            isCogSvcsError = true;
+         }
+         var elem = makeConsoleElement(JSON.stringify(cogSvcResponse), isCogSvcsError);
+         consoleBody.insertBefore(elem, consoleBody.firstChild);
       })
       .catch((err) => {
          console.log(err.message);
@@ -135,7 +144,7 @@ async function callAzureCogSvc(endpoint, key, message){
    return cogSvcsResponse;
 }
 
-function callCogSvc(){
+function task1ApiCall(){
    console.log("Calling a Cognitive Service for Sentiment");
    var resp = currentResponses["response"][questionPosition][1];
    
@@ -160,16 +169,15 @@ function callCogSvc(){
       task1Endpoint,
       task1Key,
       payload
-   ).then((thing) =>{
-      console.log("Cog Services Response:");
-      console.log(thing);
-      //Get console
-      var consoleBody = document.getElementById("console");
-      var elem = makeConsoleElement(JSON.stringify(thing, null, 5));
-      consoleBody.insertBefore(elem, consoleBody.firstChild);
+   ).then((cogSvcResponse) =>{
+      console.log("Successful call for task 1 API");
    }).catch((err) => {
       console.log("Cog Service Error:")
       console.log(err);
    });
    
+}
+
+function task2ApiCall(){
+
 }
