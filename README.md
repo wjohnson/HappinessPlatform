@@ -17,12 +17,13 @@ The following tasks should be completed during the hackathon. You'll be using or
 
 1. Provision a [Sentiment Analysis Service](https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/sentiment-opinion-mining/overview)
 2. Use the same provisioned service to implement a [Named Entity Recognition Service](https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/named-entity-recognition/overview)
-3. Provision an Azure Machine Learning Service, train a model to analyze the sentiment, and deploy the model.
+3. Provision an Azure Machine Learning Service, train a model to analyze the sentiment, and deploy the model. This will be done outside of the Happiness Platform UI due to a limitation on Cross Origin Resource Sharing.
     * To train this model, please use the [Sentiment Labelled Sentences Data](https://archive.ics.uci.edu/ml/datasets/Sentiment+Labelled+Sentences#).
     * You might use the [Azure Machine Learning Designer](https://learn.microsoft.com/en-us/azure/machine-learning/concept-designer)
     * You might use the [Azure Automated Machine Learning Service](https://learn.microsoft.com/en-us/azure/machine-learning/concept-automated-ml)
     * You might [submit a `command()`](https://learn.microsoft.com/en-us/azure/machine-learning/concept-train-machine-learning-model#submit-a-command) to a compute cluster.
     * You might use an [Interactive Notebook in the cloud](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-run-jupyter-notebooks) to do your training.
+4. Deploy a custom machine learning model through github actions.
 
 ### Mystery Tasks
 

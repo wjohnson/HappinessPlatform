@@ -114,34 +114,29 @@ function callAzureML(endpoint, key) {
 
 }
 
-async function callAzureCogSvc(endpoint, key, message) {
-   let cogSvcsResponse = {};
-   let rawResponse = null;
-   await fetch(endpoint,
+async function callMysteryApi(endpoint, key, message) {
+   let mysteryResponse = {};
+
+   await fetch(endpoint+"?code="+key,
       {
          method: 'POST',
          headers: {
             'Access-Control-Allow-Origin': '*',
-            'Ocp-Apim-Subscription-Key': key,
             'Content-Type': 'application/json'
          },
          body: JSON.stringify(message)
       },
    )
       .then((response) => response.json())
-      .then((cogSvcResponse) => {
+      .then((mysteryResponse) => {
          var consoleBody = document.getElementById("console");
-         let isCogSvcsError = false;
-         if ("error" in cogSvcResponse) {
-            isCogSvcsError = true;
-         }
-         var elem = makeConsoleElement(JSON.stringify(cogSvcResponse), isCogSvcsError);
+         var elem = makeConsoleElement(JSON.stringify(mysteryResponse), false);
          consoleBody.insertBefore(elem, consoleBody.firstChild);
       })
       .catch((err) => {
          console.log(err.message);
       });
-   return cogSvcsResponse;
+   return mysteryResponse;
 }
 
 async function callAzureMlSvc(endpoint, key, deployment, message) {
@@ -151,7 +146,7 @@ async function callAzureMlSvc(endpoint, key, deployment, message) {
       {
          method: 'POST',
          headers: {
-            'Access-Control-Allow-Origin': '*',
+            //'Access-Control-Allow-Origin': '*',
             'Authorization': 'Bearer '+key,
             'Content-Type': 'application/json',
             'azureml-model-deployment': deployment
@@ -246,12 +241,12 @@ function task2ApiCall() {
 }
 
 function task3ApiCall(){
-   console.log("Calling a Cognitive Service for Sentiment");
+   console.log("Calling an Azure ML Model");
    var resp = currentResponses["response"][questionPosition][1];
 
    // Get the first task's endpoint and key
    var task3Endpoint = document.getElementById("task3endpoint").value;
-   var task3Deployment = document.getElementById("task3Deployment").value;
+   var task3Deployment = document.getElementById("task3deployment").value;
    var task3Key = document.getElementById("task3key").value;
    if (task3Endpoint === "" || task3Deployment === "" || task3Key === "") {
       console.error("Task 3 Endpoint or Key is not defined");
@@ -273,6 +268,76 @@ function task3ApiCall(){
       payload
    ).then((amlResponse) => {
       console.log("Successful call for task 1 API");
+   }).catch((err) => {
+      console.log("Cog Service Error:")
+      console.log(err);
+   });
+}
+
+function mystery1ApiCall() {
+   var resp = currentResponses["response"][questionPosition][1];
+
+   // Get the first task's endpoint and key
+   var mystery1Endpoint = document.getElementById("mystery1endpoint").value;
+   var mystery1Key = document.getElementById("mystery1key").value;
+   var mystery1Version = document.getElementById("mystery1version").value;
+   if (mystery1Endpoint === "" || mystery1Key === "" || mystery1Version === "") {
+      console.error("Mystery 1 Endpoint or Key or Version is not defined");
+      return;
+   }
+
+   payload = {
+      kind: "EntityRecognition",
+      analysisInput: {
+         documents: [
+            {
+               id: "01",
+               text: resp,
+               language: "en"
+            }
+         ]
+      },
+      parameters: {
+         modelVersion: mystery1Version
+      }
+   }
+
+   callAzureCogSvc(
+      mystery1Endpoint,
+      mystery1Key,
+      payload
+   ).then((cogSvcResponse) => {
+      console.log("Successful call for task 2 API");
+   }).catch((err) => {
+      console.log("Cog Service Error:")
+      console.log(err);
+   });
+}
+
+
+function mystery2ApiCall() {
+   var resp = currentResponses["response"][questionPosition][1];
+
+   var mystery2Endpoint = document.getElementById("mystery2endpoint").value;
+   var mystery2Key = document.getElementById("mystery2key").value;
+
+   if (mystery2Endpoint === "" || mystery2Key === "") {
+      console.error("Mystery 2 Endpoint or Key is not defined");
+      return;
+   }
+
+   payload = {
+      input_data: [
+         [resp]
+      ]
+   }
+
+   callMysteryApi(
+      mystery2Endpoint,
+      mystery2Key,
+      payload
+   ).then((mysteryResponse) => {
+      console.log("Successful call for mystery 2 API");
    }).catch((err) => {
       console.log("Cog Service Error:")
       console.log(err);
