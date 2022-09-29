@@ -176,41 +176,6 @@ async function callAzureMlSvc(endpoint, key, deployment, message) {
    return azMlResponse;
 }
 
-function task3ApiCall(){
-   console.log("Calling a Cognitive Service for Sentiment");
-   var resp = currentResponses["response"][questionPosition][1];
-
-   // Get the first task's endpoint and key
-   var task3Endpoint = document.getElementById("task3endpoint").value;
-   var task3Deployment = document.getElementById("task3Deployment").value;
-   var task3Key = document.getElementById("task3key").value;
-   if (task3Endpoint === "" || task3Deployment === "" || task3Key === "") {
-      console.error("Task 3 Endpoint or Key is not defined");
-      return;
-   }
-
-   payload = {
-      input_data: [
-         [
-            resp
-         ]
-      ]
-   }
-
-   callAzureMlSvc(
-      task3Endpoint,
-      task3Key,
-      task3Deployment,
-      payload
-   ).then((amlResponse) => {
-      console.log("Successful call for task 1 API");
-   }).catch((err) => {
-      console.log("Cog Service Error:")
-      console.log(err);
-   });
-}
-
-
 function task1ApiCall() {
    console.log("Calling a Cognitive Service for Sentiment");
    var resp = currentResponses["response"][questionPosition][1];
@@ -274,6 +239,40 @@ function task2ApiCall() {
       payload
    ).then((cogSvcResponse) => {
       console.log("Successful call for task 2 API");
+   }).catch((err) => {
+      console.log("Cog Service Error:")
+      console.log(err);
+   });
+}
+
+function task3ApiCall(){
+   console.log("Calling a Cognitive Service for Sentiment");
+   var resp = currentResponses["response"][questionPosition][1];
+
+   // Get the first task's endpoint and key
+   var task3Endpoint = document.getElementById("task3endpoint").value;
+   var task3Deployment = document.getElementById("task3Deployment").value;
+   var task3Key = document.getElementById("task3key").value;
+   if (task3Endpoint === "" || task3Deployment === "" || task3Key === "") {
+      console.error("Task 3 Endpoint or Key is not defined");
+      return;
+   }
+
+   payload = {
+      input_data: [
+         [
+            resp
+         ]
+      ]
+   }
+
+   callAzureMlSvc(
+      task3Endpoint,
+      task3Key,
+      task3Deployment,
+      payload
+   ).then((amlResponse) => {
+      console.log("Successful call for task 1 API");
    }).catch((err) => {
       console.log("Cog Service Error:")
       console.log(err);
