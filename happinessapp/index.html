@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Happiness Platform</title>
+        <link rel="stylesheet" href="main.css">
+        <script src="./fetch.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+        <div>
+            <header>
+                <h1>😁Happiness Platform</h1>
+            </header>
+            <aside>
+                <h3>Admin Panel</h3>
+                <form>
+                    <p>
+                        <label for="task1endpoint">Task 1 Endpoint</label>
+                        <input id="task1endpoint"></input>
+                        <label for="task1key">Task 1 Key</label>
+                        <input id="task1key" type="password"></input>
+                    </p>
+                    <p>
+                        <button onclick="task1ApiCall()" type="button">Call Task 1 API</button>
+                    </p>
+                    <p>
+                        <label for="task2endpoint">Task 2 Endpoint</label>
+                        <input id="task2endpoint"></input>
+                        <label for="task2key">Task 2 Key</label>
+                        <input id="task2key" type="password"></input>
+                    </p>
+                    <p>
+                        <button onclick="task2ApiCall()" type="button">Call Task 2 API</button>
+                    </p>
+                    <!-- <p>
+                        <label for="task3endpoint">Task 3 Endpoint</label>
+                        <input id="task3endpoint"></input>
+                        <label for="task3deployment">Task 3 Deployment</label>
+                        <input id="task3deployment"></input>
+                        <label for="task3key">Task 3 Key</label>
+                        <input id="task3key" type="password"></input>
+                    </p>
+                    <p>
+                        <button onclick="task3ApiCall()" type="button">Call Task 3 API</button>
+                    </p> -->
+                    <details>
+                        <summary>Additional Tasks</summary>
+                        <h3>Mystery #1</h3>
+                        <p>
+                            <label for="mystery1endpoint">Endpoint</label>
+                            <input id="mystery1endpoint"></input>
+                            <br/>
+                            <label for="mystery1version">Version</label>
+                            <input id="mystery1version"></input>
+                            <br/>
+                            <label for="mystery1key">Key</label>
+                            <input id="mystery1key" type="password"></input>
+                        </p>
+                        <p>
+                            <button onclick="mystery1ApiCall()" type="button">Call Mystery 1 API</button>
+                        </p>
+                        <h3>Mystery #2</h3>
+                        <p>
+                            <label for="mystery2endpoint">Endpoint</label>
+                            <input id="mystery2endpoint"></input>
+                            <br/>
+                            <label for="mystery2key">Key</label>
+                            <input id="mystery2key" type="password"></input>
+                        </p>
+                        <p>
+                            <button onclick="mystery2ApiCall()" type="button">Call Mystery 2 API</button>
+                        </p>
+                    </details>
+                </form>
+                <form>
+                    <p>
+                        <label for="startfrom">Starting Id</label>
+                        <input id="startfrom"></input>
+                    </p>
+                    <p>
+                        <button onclick="getMessage()" type="button">Retrieve Message</button>
+                    </p>
+                    <p>
+                        <button onclick="clearChat()" type="button">Clear Chat</button>
+                    </p>
+                    
+                </form>
+            </aside>
+            <main id="chat">
+                <section class="message-pair">
+                    <p class="bot">Welcome to the Happiness Platform! How are you feeling today?</p>
+                    <p class="user">Feeling good now that I'm chatting with you 😁</p>
+                </section>
+                <section class="message-pair">
+                    <p class="bot">Click on "Retrieve Message" to get started</p>
+                </section>
+            </main>
+            
+            <section class="block" id="console">
+                <p>
+                    &rightarrow;
+                </p>
+            </section>
+    </body>
+</html>
