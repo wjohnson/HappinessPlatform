@@ -73,12 +73,21 @@
                             <button onclick="mystery2ApiCall()" type="button">Call Mystery 2 API</button>
                         </p>
                     </details>
+                    <details>
+                        <summary>Chatbot Config</summary>
+                        <h3>Required</h3>
+                        <p>
+                            <label for="chatbotendpoint">Endpoint with Key</label>
+                            <input id="chatbotendpoint"></input>
+                        </p>
+                        <h3>Optional</h3> 
+                        <p>
+                            <label for="startfrom">Starting Id</label>
+                            <input id="startfrom"></input>
+                        </p>
+                    </details>
                 </form>
                 <form>
-                    <p>
-                        <label for="startfrom">Starting Id</label>
-                        <input id="startfrom"></input>
-                    </p>
                     <p>
                         <button onclick="getMessage()" type="button">Retrieve Message</button>
                     </p>
