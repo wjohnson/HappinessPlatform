@@ -91,8 +91,13 @@ async function getSession(sessionId = "0001") {
       console.log("getSession: Using Default session id");
       localSessionId = "0001";
    }
+   var chatbotEndpoint = document.getElementById("chatbotendpoint").value;
+   _url = new URL(chatbotEndpoint);
+   console.log(localSessionId)
+   _url.searchParams.set('session', localSessionId);
+   console.log("Using this URL: "+ _url.toString());
 
-   await fetch('http://127.0.0.1:5000/session/' + localSessionId,
+   await fetch(_url.toString(),
       {
          method: 'GET',
          headers: {
