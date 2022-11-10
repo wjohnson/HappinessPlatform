@@ -10,6 +10,14 @@ function clearChat() {
       chatElements[i].remove();
    }
 }
+function clearConsole() {
+   console.log("Attempting to clear the console");
+   var chatElements = document.getElementsByClassName("console-message");
+   console.log("There are " + chatElements.length + " console messages");
+   for (let i = (chatElements.length - 1); i >= 0; i--) {
+      chatElements[i].remove();
+   }
+}
 
 function makeConsoleElement(consoleMessage, isError = false) {
    var ranAt = Date(Date.now())
@@ -114,10 +122,38 @@ async function getSession(sessionId = "0001") {
          console.log(err.message);
       });
 }
-// Call REST APIs
-function callAzureML(endpoint, key) {
 
+// Call REST APIs
+async function callAzureCogSvc(endpoint, key, payload) {
+   let finalResponse = {};
+
+   await fetch(endpoint,
+      {
+         method: 'POST',
+         headers: {
+            'Ocp-Apim-Subscription-Key': key,
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(payload)
+      },
+   )
+      .then((response) => response.json())
+      .then((cogSvcResponse) => {
+         var consoleBody = document.getElementById("console");
+         let isCogSvcError = false;
+         if ("error" in cogSvcResponse) {
+            isCogSvcError = true;
+         }
+         var elem = makeConsoleElement(JSON.stringify(cogSvcResponse), isCogSvcError);
+         finalResponse = cogSvcResponse;
+         consoleBody.insertBefore(elem, consoleBody.firstChild);
+      })
+      .catch((err) => {
+         console.log(err.message);
+      });
+   return finalResponse;
 }
+
 
 async function callMysteryApi(endpoint, key, message) {
    let mysteryResponse = {};
@@ -183,18 +219,23 @@ function task1ApiCall() {
    // Get the first task's endpoint and key
    var task1Endpoint = document.getElementById("task1endpoint").value;
    var task1Key = document.getElementById("task1key").value;
-   if (task1Endpoint === "" || task1Key === "") {
-      console.error("Task 1 Endpoint or Key is not defined");
+   var task1Kind = document.getElementById("task1kind").value;
+   if (task1Endpoint === "" || task1Key === "" || task1Kind === "") {
+      console.error("Task 1 Endpoint, Key, or Kind is not defined");
       return;
    }
 
    payload = {
-      documents: [
-         {
-            id: "01",
-            text: resp
-         }
-      ]
+      kind: task1Kind,
+      analysisInput: {
+         documents: [
+            {
+               id: "01",
+               text: resp,
+               language: "en"
+            }
+         ]
+      }
    }
 
    callAzureCogSvc(
@@ -215,13 +256,14 @@ function task2ApiCall() {
    // Get the first task's endpoint and key
    var task2Endpoint = document.getElementById("task2endpoint").value;
    var task2Key = document.getElementById("task2key").value;
-   if (task2Endpoint === "" || task2Key === "") {
-      console.error("Task 2 Endpoint or Key is not defined");
+   var task2Kind = document.getElementById("task2kind").value;
+   if (task2Endpoint === "" || task2Key === "" || task2Kind === "") {
+      console.error("Task 2 Endpoint, Key, or Kind is not defined");
       return;
    }
 
    payload = {
-      kind: "EntityRecognition",
+      kind: task2Kind,
       analysisInput: {
          documents: [
             {
@@ -236,7 +278,8 @@ function task2ApiCall() {
    callAzureCogSvc(
       task2Endpoint,
       task2Key,
-      payload
+      payload,
+      "EntityRecognition"
    ).then((cogSvcResponse) => {
       console.log("Successful call for task 2 API");
    }).catch((err) => {
@@ -310,9 +353,10 @@ function mystery1ApiCall() {
    callAzureCogSvc(
       mystery1Endpoint,
       mystery1Key,
-      payload
+      payload,
+      "EntityRecognition"
    ).then((cogSvcResponse) => {
-      console.log("Successful call for task 2 API");
+      console.log("Successful call for mystery API");
    }).catch((err) => {
       console.log("Cog Service Error:")
       console.log(err);
