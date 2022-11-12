@@ -34,6 +34,14 @@ jobs:
         echo $ENDPOINT_LIST
         echo "Running with JQ"
         echo $ENDPOINT_LIST | jq -r '.[].name'
+        DEPLOYMENT_EXISTS=$(az ml online-deployment list --endpoint-name $ENDPOINT_NAME | jq -r '.[].name' | grep "^$DEPLOYMENT_NAME$")
+        echo $DEPLOYMENT_EXISTS
+        if [ -z ${DEPLOYMENT_EXISTS} ]; 
+        then
+            echo "IN IF"
+        else
+            echo "IN ELSE"
+        fi
 
     - name: Create or Update an Online Deployment
       run: |
