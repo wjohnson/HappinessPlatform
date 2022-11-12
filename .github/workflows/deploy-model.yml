@@ -28,6 +28,13 @@ jobs:
     - name: Create or Update an Online Endpoint
       run: az ml online-endpoint update -f ./mlops/custom-endpoint.yml --set name=$ENDPOINT_NAME
 
+    - name: Deployment Parts
+      run: |
+        ENDPOINT_LIST=$(az ml online-deployment list --endpoint-name $ENDPOINT_NAME)
+        echo $ENDPOINT_LIST
+        echo "Running with JQ"
+        echo $ENDPOINT_LIST | jq -r '.[].name'
+
     - name: Create or Update an Online Deployment
       run: |
         DEPLOYMENT_EXISTS=$(az ml online-deployment list --endpoint-name $ENDPOINT_NAME | jq -r '.[].name' | grep "^$DEPLOYMENT_NAME$")
