@@ -1,0 +1,38 @@
+name: azureml-hard-code-deployment
+on:
+  workflow_dispatch:
+
+env:
+  MODEL_NAME: custom-sentiment-model
+  MODEL_VERSION: 1
+  ENDPOINT_NAME: chatbot-service-endpoint
+  DEPLOYMENT_NAME: sentiment-deployment
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: check out repo
+      uses: actions/checkout@v2
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZ_CREDS}}
+
+    - name: Create or Update an Online Endpoint
+      run: az configure --defaults workspace=${{secrets.WORKSPACE}} group=${{secrets.RESOURCE_GROUP}}
+        
+    - name: Create or Update an Online Endpoint
+      run: az ml online-endpoint update -f ./mlops/custom-endpoint.yml --set name=$ENDPOINT_NAME
+
+    - name: Create or Update an Online Deployment
+      run: |
+        DEPLOYMENT_EXISTS=$(az ml online-deployment list --endpoint-name $ENDPOINT_NAME | jq -r '.[].name' | grep "^$DEPLOYMENT_NAME$")
+        EXISTING_MODEL_STRING="azureml:$MODEL_NAME:$MODEL_VERSION"
+        if [ -z ${DEPLOYMENT_EXISTS} ]; 
+        then
+            az ml online-deployment update -f ./mlops/custom-deployment.yml --name $DEPLOYMENT_NAME --endpoint-name $ENDPOINT_NAME --set model=$EXISTING_MODEL_STRING
+            az ml online-endpoint update --name $ENDPOINT_NAME --traffic "$DEPLOYMENT_NAME=100"
+        else
+            az ml online-deployment create -f ./mlops/custom-deployment.yml --name $DEPLOYMENT_NAME --endpoint-name $ENDPOINT_NAME --set model=$EXISTING_MODEL_STRING --all-traffic
+        fi

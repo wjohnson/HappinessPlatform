@@ -16,7 +16,7 @@ az configure --defaults workspace=$WORKSPACE group=$RESOURCE_GROUP
 # Assuming the model is registered
 az ml online-endpoint update -f ./mlops/custom-endpoint.yml --set name=$ENDPOINT_NAME
 
-# Assuming the 
+# Check for the model deployment prior to deploying
 DEPLOYMENT_EXISTS=$(az ml online-deployment list --endpoint-name $ENDPOINT_NAME | jq -r '.[].name' | grep "^$DEPLOYMENT_NAME$")
 EXISTING_MODEL_STRING="azureml:$MODEL_NAME:$MODEL_VERSION"
 if [ -z ${DEPLOYMENT_EXISTS} ]; 
