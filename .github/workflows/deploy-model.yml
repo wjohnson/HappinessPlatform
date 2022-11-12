@@ -22,7 +22,7 @@ jobs:
       run: |
         az extension add -n ml
 
-    - name: Create or Update an Online Endpoint
+    - name: Configure defaults for az cli
       run: az configure --defaults workspace=${{secrets.WORKSPACE}} group=${{secrets.RESOURCE_GROUP}}
         
     - name: Create or Update an Online Endpoint
